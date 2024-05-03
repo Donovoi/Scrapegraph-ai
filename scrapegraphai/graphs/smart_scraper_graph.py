@@ -102,17 +102,19 @@ class SmartScraperGraph(AbstractGraph):
                 (rag_node, generate_answer_node)
             ],
             entry_point=fetch_node
-        )
+        ) 
 
-    def run(self) -> str:
+    async def run(self) -> str:
         """
-        Executes the scraping process and returns the answer to the prompt.
-
+        Asynchronously executes the scraping process and returns the answer to the prompt.
+        
         Returns:
             str: The answer to the prompt.
         """
 
         inputs = {"user_prompt": self.prompt, self.input_key: self.source}
-        self.final_state, self.execution_info = self.graph.execute(inputs)
+        
+        # Assuming graph.execute is an asynchronous method
+        self.final_state, self.execution_info = await self.graph.execute(inputs)
 
         return self.final_state.get("answer", "No answer found.")
